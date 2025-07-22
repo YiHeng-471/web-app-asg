@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Apparel"
+  },
+  {
+    "id": 2,
+    "name": "Kitchen"
+  },
+  {
+    "id": 3,
+    "name": "Furniture"
+  },
+  {
+    "id": 4,
+    "name": "Electronics"
+  },
+  {
+    "id": 5,
+    "name": "Personal Care"
+  }
+]

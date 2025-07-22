@@ -1,0 +1,245 @@
+[
+  {
+    "id": 1,
+    "name": "UrbanFlex Jogger Pants",
+    "desc": "Lightweight and breathable joggers perfect for casual wear or workouts.",
+    "img": "images/UrbanFlexJogger.webp",
+    "price": 49.99,
+    "stock": 76
+  },
+  {
+    "id": 2,
+    "name": "LuxeFit Cotton T-Shirt",
+    "desc": "Premium quality crew neck T-shirt made from 100% organic cotton.",
+    "img": "images/LuxefitCottonTShirt.webp",
+    "price": 24.00,
+    "stock": 54
+  },
+  {
+    "id": 3,
+    "name": "ArcticShell Windbreaker Jacket",
+    "desc": "Water-resistant jacket designed for light rain and breezy days.",
+    "img": "images/WindbreakerJacket.webp",
+    "price": 107.70,
+    "stock": 44
+  },
+  {
+    "id": 4,
+    "name": "StrideMax Running Shoes",
+    "desc": "Ergonomic running shoes with cushioned soles for long-distance comfort.",
+    "img": "images/RunningShoe.webp",
+    "price": 86.15,
+    "stock": 68
+  },
+  {
+    "id": 5,
+    "name": "ChicDenim High-Rise Jeans",
+    "desc": "Stylish high-rise jeans with a flattering fit and stretch denim.",
+    "img": "images/HighriseJean.webp",
+    "price": 99.90,
+    "stock": 51
+  },
+  {
+    "id": 6,
+    "name": "ComfortCrew Hoodie",
+    "desc": "Soft fleece hoodie with front pouch pocket and adjustable drawstring.",
+    "img": "images/Hoody.webp",
+    "price": 177.64,
+    "stock": 33
+  },
+
+  {
+    "id": 7,
+    "name": "ChefMate Non-Stick Frying Pan",
+    "desc": "Durable non-stick surface for easy cooking and cleaning.",
+    "img": "images/FryingPan.webp",
+    "price": 119.00,
+    "stock": 24
+  },
+  {
+    "id": 8,
+    "name": "AquaPure Electric Kettle",
+    "desc": "Fast-boiling kettle with auto shut-off and stainless steel interior.",
+    "img": "images/ElectricKettle.webp",
+    "price": 136.49,
+    "stock": 15
+  },
+  {
+    "id": 9,
+    "name": "SmartPrep Chopping Board Set",
+    "desc": "Multi-color chopping boards for hygienic food prep and easy storage.",
+    "img": "images/CuttingBoard.webp",
+    "price": 68.00,
+    "stock": 29
+  },
+  {
+    "id": 10,
+    "name": "BlendPro Mini Blender",
+    "desc": "Compact personal blender ideal for smoothies and sauces.",
+    "img": "images/Blender.webp",
+    "price": 53.85,
+    "stock": 11
+  },
+  {
+    "id": 11,
+    "name": "Stainless Elite Knife Set",
+    "desc": "6-piece professional-grade knife set with ergonomic handles.",
+    "img": "images/KitchenKnife.webp",
+    "price": 295.00,
+    "stock": 14
+  },
+  {
+    "id": 12,
+    "name": "SteamEase Rice Cooker",
+    "desc": "Efficient rice cooker with keep-warm function and non-stick pot.",
+    "img": "images/RiceCooker.webp",
+    "price": 259.99,
+    "stock": 32
+  },
+
+  {
+    "id": 13,
+    "name": "NovaWood Coffee Table",
+    "desc": "Minimalist coffee table with solid wood finish and open storage shelf.",
+    "img": "images/CoffeeTable.webp",
+    "price": 599.99,
+    "stock": 8
+  },
+  {
+    "id": 14,
+    "name": "ErgoSit Office Chair",
+    "desc": "Ergonomic chair with lumbar support and adjustable height settings.",
+    "img": "images/ErgoChair.webp",
+    "price": 649.99,
+    "stock": 18
+  },
+  {
+    "id": 15,
+    "name": "FlexiShelf Bookcase",
+    "desc": "5-tier modular bookshelf for books, decor, and office supplies.",
+    "img": "images/Bookshelf.webp",
+    "price": 800.00,
+    "stock": 27
+  },
+  {
+    "id": 16,
+    "name": "ComfyNest Recliner Sofa",
+    "desc": "Plush reclining sofa with wide armrests and cup holders.",
+    "img": "images/ReclinerSofa.webp",
+    "price": 6658.41,
+    "stock": 4
+  },
+  {
+    "id": 17,
+    "name": "Oakline Dining Table Set",
+    "desc": "Classic wooden dining set with 4 chairs and a sturdy table.",
+    "img": "images/DiningTable.webp",
+    "price": 2995.28,
+    "stock": 7
+  },
+  {
+    "id": 18,
+    "name": "SpaceSaver Bed Frame",
+    "desc": "Modern platform bed with built-in under-bed storage drawers.",
+    "img": "images/BedFrame.webp",
+    "price": 1465.78,
+    "stock": 13
+  },
+
+  {
+    "id": 19,
+    "name": "SoundPulse Wireless Earbuds",
+    "desc": "Bluetooth earbuds with noise-cancellation and charging case.",
+    "img": "images/WirelessEarbuds.webp",
+    "price": 149.99,
+    "stock": 47
+  },
+  {
+    "id": 20,
+    "name": "PixelView HD Monitor",
+    "desc": "24-inch full HD monitor with adjustable stand and HDMI input.",
+    "img": "images/HDMonitor.webp",
+    "price": 485.00,
+    "stock": 25
+  },
+  {
+    "id": 21,
+    "name": "PowerBase Portable Charger",
+    "desc": "10,000mAh power bank with dual USB output for fast charging.",
+    "img": "images/PortableCharger.webp",
+    "price": 426.94,
+    "stock": 31
+  },
+  {
+    "id": 22,
+    "name": "SmartZone Wi-Fi Router",
+    "desc": "Dual-band router offering stable connection and parental controls.",
+    "img": "images/Router.webp",
+    "price": 379.00,
+    "stock": 22
+  },
+  {
+    "id": 23,
+    "name": "ClickShot Action Camera",
+    "desc": "Waterproof action cam with 4K recording and wide-angle lens.",
+    "img": "images/ActionCamera.webp",
+    "price": 303.33,
+    "stock": 19
+  },
+  {
+    "id": 24,
+    "name": "BrightLite LED Desk Lamp",
+    "desc": "Touch-control LED lamp with adjustable brightness and USB port.",
+    "img": "images/DeskLamp.webp",
+    "price": 89.00,
+    "stock": 34
+  },
+  {
+    "id": 25,
+    "name": "GlowSkin Facial Cleanser",
+    "desc": "Gentle foaming cleanser for all skin types with aloe and vitamin E",
+    "img": "images/FacialCleanser.webp",
+    "price": 9.90,
+    "stock": 85
+  },
+  {
+    "id": 26,
+    "name": "SootheCare Electric Toothbrush",
+    "desc": "Rechargeable toothbrush with multiple brushing modes.",
+    "img": "images/ElectricToothbrush.webp",
+    "price": 227.45,
+    "stock": 16
+  },
+  {
+    "id": 27,
+    "name": "AromaTherapy Essential Oil Diffuser",
+    "desc": "Ultrasonic diffuser with color-changing light and mist settings.",
+    "img": "images/OilDiffuser.webp",
+    "price": 39.90,
+    "stock": 40
+  },
+  {
+    "id": 28,
+    "name": "SilkTouch Hair Dryer",
+    "desc": "Compact hair dryer with ionic technology for smooth styling.",
+    "img": "images/HairDryer.webp",
+    "price": 264.00,
+    "stock": 12
+  },
+  {
+    "id": 29,
+    "name": "RevitaShave Razor Kit",
+    "desc": "Ergonomic razor with 5-blade design.",
+    "img": "images/RazorKit.webp",
+    "price": 129.90,
+    "stock": 21
+  },
+  {
+    "id": 30,
+    "name": "HydraFresh Body Lotion",
+    "desc": "Fast-absorbing body lotion with shea butter for lasting hydration.",
+    "img": "images/BodyLotion.webp",
+    "price": 61.88,
+    "stock": 43
+  }
+]
