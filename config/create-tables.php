@@ -4,9 +4,9 @@ include('./config.php');
 $createCustomer = " 
 CREATE TABLE IF NOT EXISTS `customer` (
   `cust_id` INT NOT NULL AUTO_INCREMENT,
-  `password` VARCHAR(30) NOT NULL,
-  `username` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `phone_number` VARCHAR(11) NOT NULL,
   `address` VARCHAR(255) NOT NULL,
   `postcode` VARCHAR(5) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_id` INT NOT NULL AUTO_INCREMENT,
   `product_name` VARCHAR(45) NOT NULL,
   `product_desc` MEDIUMTEXT NOT NULL,
-  `product_img` VARCHAR(45) NOT NULL,
+  `product_img` VARCHAR(2000) NOT NULL,
   `product_price` DECIMAL(13,2) NOT NULL,
   `stock_qty` INT NOT NULL,
   `category_id` INT NOT NULL,
@@ -165,61 +165,62 @@ CREATE TABLE IF NOT EXISTS `order_item` (
 ENGINE = InnoDB;
 ";
 
-if ($conn->query($createCustomer)) {
+
+if (mysqli_query($conn, $createCustomer)) {
   echo "Table customer created successfully!<br>";
 } else {
-  echo "Error creating customer table: " . $conn->error;
+  echo "Error creating customer table: " . mysqli_error($conn);
   exit();
 }
 
-if ($conn->query($createOrder)) {
+if (mysqli_query($conn, $createOrder)) {
   echo "Table order created successfully!<br>";
 } else {
-  echo "Error order customer table: " . $conn->error;
+  echo "Error creating order table: " . mysqli_error($conn);
   exit();
 }
 
-if ($conn->query($createPayment)) {
+if (mysqli_query($conn, $createPayment)) {
   echo "Table payment created successfully!<br>";
 } else {
-  echo "Error payment customer table: " . $conn->error;
+  echo "Error creating payment table: " . mysqli_error($conn);
   exit();
 }
 
-
-if ($conn->query($createProductCategory)) {
+if (mysqli_query($conn, $createProductCategory)) {
   echo "Table product_category created successfully!<br>";
 } else {
-  echo "Error product_category customer table: " . $conn->error;
+  echo "Error creating product_category table: " . mysqli_error($conn);
   exit();
 }
 
-if ($conn->query($createProduct)) {
+if (mysqli_query($conn, $createProduct)) {
   echo "Table product created successfully!<br>";
 } else {
-  echo "Error product customer table: " . $conn->error;
+  echo "Error creating product table: " . mysqli_error($conn);
   exit();
 }
 
-if ($conn->query($createCartItem)) {
+if (mysqli_query($conn, $createCartItem)) {
   echo "Table cart_item created successfully!<br>";
 } else {
-  echo "Error cart_item customer table: " . $conn->error;
+  echo "Error creating cart_item table: " . mysqli_error($conn);
   exit();
 }
 
-if ($conn->query($createWishlistItem)) {
+if (mysqli_query($conn, $createWishlistItem)) {
   echo "Table wishlist_item created successfully!<br>";
 } else {
-  echo "Error wishlist_item customer table: " . $conn->error;
+  echo "Error creating wishlist_item table: " . mysqli_error($conn);
   exit();
 }
 
-if ($conn->query($createOrderItem)) {
+if (mysqli_query($conn, $createOrderItem)) {
   echo "Table order_item created successfully!<br>";
 } else {
-  echo "Error order_item customer table: " . $conn->error;
+  echo "Error creating order_item table: " . mysqli_error($conn);
   exit();
 }
 
-$conn->close();
+
+mysqli_close($conn);

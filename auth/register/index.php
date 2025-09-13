@@ -1,6 +1,7 @@
 <?php
 include_once("../../config/config.php");
 
+
 // Input value
 $email = '';
 $password = '';
@@ -45,97 +46,102 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $address = trim($_POST['address']) ?? '';
   $postcode = trim($_POST['postcode']) ?? '';
   $state = trim($_POST['state']) ?? '';
+
+  // Replace all hyphens (-) and white space
   $phoneNumber = $_POST['phonenumber'] ? preg_replace('/[\-\s]/', '', trim($_POST['phonenumber'])) : '';
 
-  $hasErr = false;
+  $inputErr = false;
 
   // Email validation
   if (empty($email)) {
     $emailErr = "Email is required";
-    $hasErr = true;
+    $inputErr = true;
   } else if (!validateEmail($email)) {
     $emailErr = "Please enter a valid email";
-    $hasErr = true;
+    $inputErr = true;
   } else if (checkEmailExists($email, $conn)) {
     $emailErr = "Email already existed";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // Password validation
   if (empty($password)) {
     $passwordErr = "Password is required";
-    $hasErr = true;
+    $inputErr = true;
   } else if (strlen($password) < 6) {
     $passwordErr = "Password must have at least 6 characters";
-    $hasErr = true;
+    $inputErr = true;
   } else if (!validatePassword($password)) {
     $passwordErr = "Password must contain at least one special character(s)";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // Username validation
   if (empty($username)) {
     $usernameErr = "Username is required";
-    $hasErr = true;
+    $inputErr = true;
   } else if (checkUsernameExists($username, $conn)) {
     $usernameErr = "Username already exists";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // Phone number validation
   if (empty($phoneNumber)) {
     $phoneNumberErr = "Phone number is required";
-    $hasErr = true;
+    $inputErr = true;
   } else if (!validatePhoneNumber($phoneNumber)) {
     $phoneNumberErr = "Please enter a valid phone number";
-    $hasErr = true;
+    $inputErr = true;
   } else if (checkPhonenumberExists($phoneNumber, $conn)) {
     $phoneNumberErr = "Phone number already exists";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // Address validation
   if (empty($address)) {
     $addressErr = "Address is required";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // Postcode validation
   if (empty($postcode)) {
     $postcodeErr = "Postcode is required";
-    $hasErr = true;
+    $inputErr = true;
   } else if (!validatePostcode($postcode)) {
     $postcodeErr = "Please enter a valid 5-digit postcode";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // State validation
   if (empty($state)) {
     $stateErr = "State is required";
-    $hasErr = true;
+    $inputErr = true;
   } else if (!in_array($state, $states)) {
     $stateErr = "Please select a valid state";
-    $hasErr = true;
+    $inputErr = true;
   }
 
   // Only proceed if email and password input are valid
-  if (!$hasErr) {
+  if (!$inputErr) {
     // Example insert query template
     $insertQuery = "INSERT INTO customer (email, username, password, phone_number, address, postcode, state) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_prepare($conn, $insertQuery);
 
     // Hash the password before storing
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $result = $conn->execute_query($insertQuery, [$email, $username, $hashedPassword, $phoneNumber, $address, $postcode, $state]);
+    mysqli_stmt_bind_param($stmt, "sssssss", $email, $username, $hashedPassword, $phoneNumber, $address, $postcode, $state);
 
-    if (!$result) {
-      $registerErr = "Error registering your account. Please try again later. Error: " . $conn->error;
+    if (!mysqli_stmt_execute($stmt)) {
+      $registerErr = "Error registering your account. Please try again later.";
     } else {
       header("Location: ../login/");
     }
+    mysqli_stmt_close($stmt);
   }
 
-  $conn->close();
+  mysqli_close($conn);
 }
 
 function validateEmail(string $email)
@@ -144,43 +150,64 @@ function validateEmail(string $email)
   return preg_match($emailregex, $email) === 1;
 }
 
-// Check if the email has been used by other users
+// Check if the email has been used by other customer
 function checkEmailExists(string $email, mysqli $conn)
 {
   $user = "select email from customer where email = ?";
-  $result = $conn->execute_query($user, [trim($email)]);
+  $stmt = mysqli_prepare($conn, $user);
+  mysqli_stmt_bind_param($stmt, "s", $email);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
 
-  if ($result->num_rows > 0) {
-    return true;
+  $emailExists = false;
+
+  if (mysqli_stmt_num_rows($stmt) > 0) {
+    $emailExists = true;
   }
 
-  return false;
+  mysqli_stmt_close($stmt);
+
+  return $emailExists;
 }
 
-// Check if the username has been taken by other users
+// Check if the username has been taken by other customer
 function checkUsernameExists(string $username, mysqli $conn)
 {
   $user = "select username from customer where username = ?";
-  $result = $conn->execute_query($user, [trim($username)]);
+  $stmt = mysqli_prepare($conn, $user);
+  mysqli_stmt_bind_param($stmt, "s", $username);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
 
-  if ($result->num_rows > 0) {
-    return true;
+  $usernameExists = false;
+
+  if (mysqli_stmt_num_rows($stmt) > 0) {
+    $usernameExists = true;
   }
 
-  return false;
+  mysqli_stmt_close($stmt);
+
+  return $usernameExists;
 }
 
-// Check if the phone number has been taken by other users
+// Check if the phone number has been taken by other customer
 function checkPhonenumberExists(string $phoneNumber, mysqli $conn)
 {
   $user = "select phone_number from customer where phone_number = ?";
-  $result = $conn->execute_query($user, [trim($phoneNumber)]);
+  $stmt = mysqli_prepare($conn, $user);
+  mysqli_stmt_bind_param($stmt, "s", $phoneNumber);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
 
-  if ($result->num_rows > 0) {
-    return true;
+  $phoneNumberExists = false;
+
+  if (mysqli_stmt_num_rows($stmt) > 0) {
+    $phoneNumberExists = true;
   }
 
-  return false;
+  mysqli_stmt_close($stmt);
+
+  return $phoneNumberExists;
 }
 
 function validatePassword(string $password)
@@ -240,7 +267,7 @@ function validatePhoneNumber(string $phoneNumber)
           value="<?php echo htmlspecialchars($email) ?>"
           class="bg-gray-900 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200" />
         <!-- Email error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($emailErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold"><?php echo htmlspecialchars($emailErr) ?></span>
       </label>
 
       <!-- Username Field -->
@@ -250,7 +277,7 @@ function validatePhoneNumber(string $phoneNumber)
           value="<?php echo htmlspecialchars($username) ?>"
           class="bg-gray-900 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200" />
         <!-- Username error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($usernameErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold font-bold"><?php echo htmlspecialchars($usernameErr) ?></span>
       </label>
 
       <!-- Password Field -->
@@ -260,7 +287,7 @@ function validatePhoneNumber(string $phoneNumber)
           value="<?php echo htmlspecialchars($password) ?>"
           class="bg-gray-900 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200" />
         <!-- Password error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($passwordErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold"><?php echo htmlspecialchars($passwordErr) ?></span>
       </label>
 
       <!-- Phone Number Field -->
@@ -270,7 +297,7 @@ function validatePhoneNumber(string $phoneNumber)
           value="<?php echo htmlspecialchars($phoneNumber) ?>"
           class="bg-gray-900 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200" />
         <!-- Phone Number error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($phoneNumberErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold"><?php echo htmlspecialchars($phoneNumberErr) ?></span>
       </label>
 
       <!-- Address Field -->
@@ -280,7 +307,7 @@ function validatePhoneNumber(string $phoneNumber)
           value="<?php echo htmlspecialchars($address) ?>"
           class="bg-gray-900 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200" />
         <!-- Address error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($addressErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold"><?php echo htmlspecialchars($addressErr) ?></span>
       </label>
 
       <!-- Postcode Field -->
@@ -290,7 +317,7 @@ function validatePhoneNumber(string $phoneNumber)
           value="<?php echo htmlspecialchars($postcode) ?>"
           class="bg-gray-900 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200" />
         <!-- Postcode error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($postcodeErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold"><?php echo htmlspecialchars($postcodeErr) ?></span>
       </label>
 
       <!-- State Field -->
@@ -305,7 +332,7 @@ function validatePhoneNumber(string $phoneNumber)
           ?>
         </select>
         <!-- State error message -->
-        <span class="text-red-400 err-msg text-sm h-6"><?php echo htmlspecialchars($stateErr) ?></span>
+        <span class="text-red-400 text-sm h-5 err-msg font-bold"><?php echo htmlspecialchars($stateErr) ?></span>
       </label>
 
       <!-- Submit Button -->
@@ -322,21 +349,6 @@ function validatePhoneNumber(string $phoneNumber)
   </main>
 
 </body>
-<script>
-  // Get all labels 
-  const inputLabels = document.querySelectorAll("label");
-
-  inputLabels.forEach(label => {
-    const inputField = label.querySelector("input")
-
-    const selectField = label.querySelector("select")
-    const errSpan = label.querySelector("span.err-msg");
-
-    // Clear each input field's error message when user start typing
-    inputField && inputField.addEventListener("input", () => errSpan.innerHTML = "");
-    selectField && selectField.addEventListener("input", () => errSpan.innerHTML = "");
-
-  })
-</script>
+<script src="./register.js"></script>
 
 </html>
